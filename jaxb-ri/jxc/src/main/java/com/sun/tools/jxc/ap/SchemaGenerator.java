@@ -102,6 +102,9 @@ public class SchemaGenerator extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         final ErrorReceiverImpl errorListener = new ErrorReceiverImpl(processingEnv);
 
+        if(roundEnv.processingOver()) // this method must be executed only the first time
+            return false;
+
         List<Reference> classesToBeBound = new ArrayList<Reference>();
         // simply ignore all the interface definitions,
         // so that users won't have to manually exclude interfaces, which is silly.
